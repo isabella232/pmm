@@ -18,23 +18,7 @@ var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
 
-func (this *ListAlertingRulesRequest) Validate() error {
-	return nil
-}
-func (this *ListAlertingRulesResponse) Validate() error {
-	for _, item := range this.Rules {
-		if item != nil {
-			if err := github_com_mwitkow_go_proto_validators.CallValidatorIfExists(item); err != nil {
-				return github_com_mwitkow_go_proto_validators.FieldError("Rules", err)
-			}
-		}
-	}
-	return nil
-}
-func (this *ListAlertingRulesResponse_Param) Validate() error {
-	return nil
-}
-func (this *ListAlertingRulesResponse_Rule) Validate() error {
+func (this *Rule) Validate() error {
 	for _, item := range this.Params {
 		if item != nil {
 			if err := github_com_mwitkow_go_proto_validators.CallValidatorIfExists(item); err != nil {
@@ -50,6 +34,22 @@ func (this *ListAlertingRulesResponse_Rule) Validate() error {
 	if this.For != nil {
 		if err := github_com_mwitkow_go_proto_validators.CallValidatorIfExists(this.For); err != nil {
 			return github_com_mwitkow_go_proto_validators.FieldError("For", err)
+		}
+	}
+	return nil
+}
+func (this *Rule_Param) Validate() error {
+	return nil
+}
+func (this *ListAlertingRulesRequest) Validate() error {
+	return nil
+}
+func (this *ListAlertingRulesResponse) Validate() error {
+	for _, item := range this.Rules {
+		if item != nil {
+			if err := github_com_mwitkow_go_proto_validators.CallValidatorIfExists(item); err != nil {
+				return github_com_mwitkow_go_proto_validators.FieldError("Rules", err)
+			}
 		}
 	}
 	return nil
@@ -79,5 +79,10 @@ func (this *ChangeAlertingRulesRequest_Param) Validate() error {
 	return nil
 }
 func (this *ChangeAlertingRulesResponse) Validate() error {
+	if this.Rules != nil {
+		if err := github_com_mwitkow_go_proto_validators.CallValidatorIfExists(this.Rules); err != nil {
+			return github_com_mwitkow_go_proto_validators.FieldError("Rules", err)
+		}
+	}
 	return nil
 }

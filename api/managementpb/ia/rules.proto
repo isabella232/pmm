@@ -22,12 +22,8 @@ enum ParamType {
   FLOAT = 1;
 }
 
-message ListAlertingRulesRequest {
-  // If true, Integrated Alerting rule files will be re-read from disk.
-  bool reload = 1;
-}
-
-message ListAlertingRulesResponse {
+// Rule represents Integrated Alerting rule.
+message Rule {
   // Param repsesents a single Integrated Alerting rule parameter.
   message Param {
     // Parameter name.
@@ -47,21 +43,26 @@ message ListAlertingRulesResponse {
     // Parameter set value (float).
     float value = 8;
   }
-  // Rule represents Integrated Alerting rule.
-  message Rule {
-    // Rule name.
-    string name = 1;
-    // Rules status: enabled or disabled.
-    bool enabled = 2;
-    // Rule description.
-    string help = 3;
-    // Rule parameters.
-    repeated Param params = 4;
-    // Rule default duration.
-    google.protobuf.Duration default_for = 5;
-    // Rule set duration.
-    google.protobuf.Duration for = 6;
-  }
+  // Rule name.
+  string name = 1;
+  // Rules status: enabled or disabled.
+  bool enabled = 2;
+  // Rule description.
+  string help = 3;
+  // Rule parameters.
+  repeated Param params = 4;
+  // Rule default duration.
+  google.protobuf.Duration default_for = 5;
+  // Rule set duration.
+  google.protobuf.Duration for = 6;
+}
+
+message ListAlertingRulesRequest {
+  // If true, Integrated Alerting rule files will be re-read from disk.
+  bool reload = 1;
+}
+
+message ListAlertingRulesResponse {
   // Integrated Alerting rules.
   repeated Rule rules = 1;
 }
@@ -87,18 +88,20 @@ message ChangeAlertingRulesRequest {
     }
   ];
   // Sets new rule status: enabled or disabled. Must always be sent.
+  // FIXME ?
   bool enabled = 2;
   // Parameters to change. Missing parameters will not be changed.
   repeated Param params = 3;
-  // Rule set duration.
+  // Rule set duration. Zero value will not change it.
+  // FIXME ?
   google.protobuf.Duration for = 4;
   // Remove set duration (reset to default).
   bool remove_for = 5;
 }
 
 message ChangeAlertingRulesResponse {
-  // TODO
-
+  // Changed rule information.
+  Rule rules = 1;
 }
 
 // Rules service provides public methods for managing Integrated Alerting rules.

@@ -31,14 +31,14 @@
               "type": "object",
               "properties": {
                 "enabled": {
-                  "description": "Sets new rule status: enabled or disabled. Must always be sent.",
                   "type": "boolean",
                   "format": "boolean",
+                  "title": "Sets new rule status: enabled or disabled. Must always be sent.\nFIXME ?",
                   "x-order": 1
                 },
                 "for": {
-                  "description": "Rule set duration.",
                   "type": "string",
+                  "title": "Rule set duration. Zero value will not change it.\nFIXME ?",
                   "x-order": 3
                 },
                 "name": {
@@ -88,7 +88,107 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "type": "object"
+              "type": "object",
+              "properties": {
+                "rules": {
+                  "description": "Rule represents Integrated Alerting rule.",
+                  "type": "object",
+                  "properties": {
+                    "default_for": {
+                      "description": "Rule default duration.",
+                      "type": "string",
+                      "x-order": 4
+                    },
+                    "enabled": {
+                      "description": "Rules status: enabled or disabled.",
+                      "type": "boolean",
+                      "format": "boolean",
+                      "x-order": 1
+                    },
+                    "for": {
+                      "description": "Rule set duration.",
+                      "type": "string",
+                      "x-order": 5
+                    },
+                    "help": {
+                      "description": "Rule description.",
+                      "type": "string",
+                      "x-order": 2
+                    },
+                    "name": {
+                      "description": "Rule name.",
+                      "type": "string",
+                      "x-order": 0
+                    },
+                    "params": {
+                      "description": "Rule parameters.",
+                      "type": "array",
+                      "items": {
+                        "description": "Param repsesents a single Integrated Alerting rule parameter.",
+                        "type": "object",
+                        "properties": {
+                          "default_value": {
+                            "description": "Parameter set value (float).",
+                            "type": "number",
+                            "format": "float",
+                            "x-order": 6
+                          },
+                          "help": {
+                            "description": "Parameter description.",
+                            "type": "string",
+                            "x-order": 1
+                          },
+                          "max_value": {
+                            "description": "Parameter maximum value (float).",
+                            "type": "number",
+                            "format": "float",
+                            "x-order": 5
+                          },
+                          "min_value": {
+                            "description": "Parameter minimal value (float).",
+                            "type": "number",
+                            "format": "float",
+                            "x-order": 4
+                          },
+                          "name": {
+                            "description": "Parameter name.",
+                            "type": "string",
+                            "x-order": 0
+                          },
+                          "type": {
+                            "description": "ParamType Integrated Alerting rule parameter type.",
+                            "type": "string",
+                            "default": "PARAM_TYPE_INVALID",
+                            "enum": [
+                              "PARAM_TYPE_INVALID",
+                              "FLOAT"
+                            ],
+                            "x-order": 3
+                          },
+                          "unit": {
+                            "description": "ParamUnit Integrated Alerting rule parameter unit.",
+                            "type": "string",
+                            "default": "PARAM_UNIT_INVALID",
+                            "enum": [
+                              "PARAM_UNIT_INVALID",
+                              "PERCENTAGE"
+                            ],
+                            "x-order": 2
+                          },
+                          "value": {
+                            "description": "Parameter set value (float).",
+                            "type": "number",
+                            "format": "float",
+                            "x-order": 7
+                          }
+                        }
+                      },
+                      "x-order": 3
+                    }
+                  },
+                  "x-order": 0
+                }
+              }
             }
           },
           "default": {
