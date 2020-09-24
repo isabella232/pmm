@@ -119,26 +119,22 @@ func (o *ListAlertingRulesDefault) readResponse(response runtime.ClientResponse,
 	return nil
 }
 
-/*DetailsItems0 details items0
-swagger:model DetailsItems0
+/*ListAlertingRulesBody list alerting rules body
+swagger:model ListAlertingRulesBody
 */
-type DetailsItems0 struct {
+type ListAlertingRulesBody struct {
 
-	// type url
-	TypeURL string `json:"type_url,omitempty"`
-
-	// value
-	// Format: byte
-	Value strfmt.Base64 `json:"value,omitempty"`
+	// If true, Integrated Alerting rule files will be re-read from disk.
+	Reload bool `json:"reload,omitempty"`
 }
 
-// Validate validates this details items0
-func (o *DetailsItems0) Validate(formats strfmt.Registry) error {
+// Validate validates this list alerting rules body
+func (o *ListAlertingRulesBody) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
 // MarshalBinary interface implementation
-func (o *DetailsItems0) MarshalBinary() ([]byte, error) {
+func (o *ListAlertingRulesBody) MarshalBinary() ([]byte, error) {
 	if o == nil {
 		return nil, nil
 	}
@@ -146,8 +142,8 @@ func (o *DetailsItems0) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (o *DetailsItems0) UnmarshalBinary(b []byte) error {
-	var res DetailsItems0
+func (o *ListAlertingRulesBody) UnmarshalBinary(b []byte) error {
+	var res ListAlertingRulesBody
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}
@@ -304,13 +300,19 @@ type RulesItems0 struct {
 	// Rule name.
 	Name string `json:"name,omitempty"`
 
+	// Rules status: enabled or disabled.
+	Enabled bool `json:"enabled,omitempty"`
+
 	// Rule description.
 	Help string `json:"help,omitempty"`
 
 	// Rule parameters.
 	Params []*RulesItems0ParamsItems0 `json:"params"`
 
-	// Rule duration.
+	// Rule default duration.
+	DefaultFor string `json:"default_for,omitempty"`
+
+	// Rule set duration.
 	For string `json:"for,omitempty"`
 }
 
@@ -396,7 +398,10 @@ type RulesItems0ParamsItems0 struct {
 	// Parameter maximum value (float).
 	MaxValue float32 `json:"max_value,omitempty"`
 
-	// Parameter current value (float).
+	// Parameter set value (float).
+	DefaultValue float32 `json:"default_value,omitempty"`
+
+	// Parameter set value (float).
 	Value float32 `json:"value,omitempty"`
 }
 

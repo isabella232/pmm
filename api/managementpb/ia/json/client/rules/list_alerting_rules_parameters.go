@@ -61,7 +61,7 @@ for the list alerting rules operation typically these are written to a http.Requ
 type ListAlertingRulesParams struct {
 
 	/*Body*/
-	Body interface{}
+	Body ListAlertingRulesBody
 
 	timeout    time.Duration
 	Context    context.Context
@@ -102,13 +102,13 @@ func (o *ListAlertingRulesParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithBody adds the body to the list alerting rules params
-func (o *ListAlertingRulesParams) WithBody(body interface{}) *ListAlertingRulesParams {
+func (o *ListAlertingRulesParams) WithBody(body ListAlertingRulesBody) *ListAlertingRulesParams {
 	o.SetBody(body)
 	return o
 }
 
 // SetBody adds the body to the list alerting rules params
-func (o *ListAlertingRulesParams) SetBody(body interface{}) {
+func (o *ListAlertingRulesParams) SetBody(body ListAlertingRulesBody) {
 	o.Body = body
 }
 
@@ -120,10 +120,8 @@ func (o *ListAlertingRulesParams) WriteToRequest(r runtime.ClientRequest, reg st
 	}
 	var res []error
 
-	if o.Body != nil {
-		if err := r.SetBodyParam(o.Body); err != nil {
-			return err
-		}
+	if err := r.SetBodyParam(o.Body); err != nil {
+		return err
 	}
 
 	if len(res) > 0 {

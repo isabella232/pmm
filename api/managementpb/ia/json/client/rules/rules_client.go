@@ -25,9 +25,44 @@ type Client struct {
 
 // ClientService is the interface for Client methods
 type ClientService interface {
+	ChangeAlertingRules(params *ChangeAlertingRulesParams) (*ChangeAlertingRulesOK, error)
+
 	ListAlertingRules(params *ListAlertingRulesParams) (*ListAlertingRulesOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
+}
+
+/*
+  ChangeAlertingRules changes alerting rules changes integrated alerting rule
+*/
+func (a *Client) ChangeAlertingRules(params *ChangeAlertingRulesParams) (*ChangeAlertingRulesOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewChangeAlertingRulesParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "ChangeAlertingRules",
+		Method:             "POST",
+		PathPattern:        "/v1/management/ia/Rules/Change",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &ChangeAlertingRulesReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*ChangeAlertingRulesOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*ChangeAlertingRulesDefault)
+	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
