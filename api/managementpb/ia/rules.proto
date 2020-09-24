@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package ia.v1beta1;
+
+option go_package = "iav1beta1";
+
+import "google/api/annotations.proto";
+
+// TODO move it to parent directory / package once API is v1-stable
+
+message ListAlertingRulesRequest {}
+
+message ListAlertingRulesResponse {}
+
+// Rules service provides public methods for managing Integrated Alerting rules.
+service Rules {
+  // ListAlertingRules returns a list of all Integrated Alerting rules.
+  rpc ListAlertingRules(ListAlertingRulesRequest) returns (ListAlertingRulesResponse) {
+    option (google.api.http) = {
+      post: "/v1/management/ia/Rules/List"
+      body: "*"
+    };
+  }
+}
