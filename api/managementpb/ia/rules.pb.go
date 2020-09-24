@@ -7,6 +7,7 @@ import (
 	context "context"
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
+	duration "github.com/golang/protobuf/ptypes/duration"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
@@ -24,6 +25,58 @@ var _ = math.Inf
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
+
+// ParamUnit Integrated Alerting rule parameter unit.
+type ParamUnit int32
+
+const (
+	ParamUnit_PARAM_UNIT_INVALID ParamUnit = 0
+	ParamUnit_PERCENTAGE         ParamUnit = 1
+)
+
+var ParamUnit_name = map[int32]string{
+	0: "PARAM_UNIT_INVALID",
+	1: "PERCENTAGE",
+}
+
+var ParamUnit_value = map[string]int32{
+	"PARAM_UNIT_INVALID": 0,
+	"PERCENTAGE":         1,
+}
+
+func (x ParamUnit) String() string {
+	return proto.EnumName(ParamUnit_name, int32(x))
+}
+
+func (ParamUnit) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor_f77c2da78f7912f5, []int{0}
+}
+
+// ParamType Integrated Alerting rule parameter type.
+type ParamType int32
+
+const (
+	ParamType_PARAM_TYPE_INVALID ParamType = 0
+	ParamType_FLOAT              ParamType = 1
+)
+
+var ParamType_name = map[int32]string{
+	0: "PARAM_TYPE_INVALID",
+	1: "FLOAT",
+}
+
+var ParamType_value = map[string]int32{
+	"PARAM_TYPE_INVALID": 0,
+	"FLOAT":              1,
+}
+
+func (x ParamType) String() string {
+	return proto.EnumName(ParamType_name, int32(x))
+}
+
+func (ParamType) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor_f77c2da78f7912f5, []int{1}
+}
 
 type ListAlertingRulesRequest struct {
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -57,9 +110,11 @@ func (m *ListAlertingRulesRequest) XXX_DiscardUnknown() {
 var xxx_messageInfo_ListAlertingRulesRequest proto.InternalMessageInfo
 
 type ListAlertingRulesResponse struct {
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	// Integrated Alerting rules.
+	Rules                []*ListAlertingRulesResponse_Rule `protobuf:"bytes,1,rep,name=rules,proto3" json:"rules,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                          `json:"-"`
+	XXX_unrecognized     []byte                            `json:"-"`
+	XXX_sizecache        int32                             `json:"-"`
 }
 
 func (m *ListAlertingRulesResponse) Reset()         { *m = ListAlertingRulesResponse{} }
@@ -87,9 +142,183 @@ func (m *ListAlertingRulesResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_ListAlertingRulesResponse proto.InternalMessageInfo
 
+func (m *ListAlertingRulesResponse) GetRules() []*ListAlertingRulesResponse_Rule {
+	if m != nil {
+		return m.Rules
+	}
+	return nil
+}
+
+// Param repsesents a single Integrated Alerting rule parameter.
+type ListAlertingRulesResponse_Param struct {
+	// Parameter name.
+	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	// Parameter description.
+	Help string `protobuf:"bytes,2,opt,name=help,proto3" json:"help,omitempty"`
+	// Parameter unit.
+	Unit ParamUnit `protobuf:"varint,3,opt,name=unit,proto3,enum=ia.v1beta1.ParamUnit" json:"unit,omitempty"`
+	// Parameter type.
+	Type ParamType `protobuf:"varint,4,opt,name=type,proto3,enum=ia.v1beta1.ParamType" json:"type,omitempty"`
+	// Parameter minimal value (float).
+	MinValue float32 `protobuf:"fixed32,5,opt,name=min_value,json=minValue,proto3" json:"min_value,omitempty"`
+	// Parameter maximum value (float).
+	MaxValue float32 `protobuf:"fixed32,6,opt,name=max_value,json=maxValue,proto3" json:"max_value,omitempty"`
+	// Parameter current value (float).
+	Value                float32  `protobuf:"fixed32,7,opt,name=value,proto3" json:"value,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *ListAlertingRulesResponse_Param) Reset()         { *m = ListAlertingRulesResponse_Param{} }
+func (m *ListAlertingRulesResponse_Param) String() string { return proto.CompactTextString(m) }
+func (*ListAlertingRulesResponse_Param) ProtoMessage()    {}
+func (*ListAlertingRulesResponse_Param) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f77c2da78f7912f5, []int{1, 0}
+}
+
+func (m *ListAlertingRulesResponse_Param) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ListAlertingRulesResponse_Param.Unmarshal(m, b)
+}
+func (m *ListAlertingRulesResponse_Param) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ListAlertingRulesResponse_Param.Marshal(b, m, deterministic)
+}
+func (m *ListAlertingRulesResponse_Param) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ListAlertingRulesResponse_Param.Merge(m, src)
+}
+func (m *ListAlertingRulesResponse_Param) XXX_Size() int {
+	return xxx_messageInfo_ListAlertingRulesResponse_Param.Size(m)
+}
+func (m *ListAlertingRulesResponse_Param) XXX_DiscardUnknown() {
+	xxx_messageInfo_ListAlertingRulesResponse_Param.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ListAlertingRulesResponse_Param proto.InternalMessageInfo
+
+func (m *ListAlertingRulesResponse_Param) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+func (m *ListAlertingRulesResponse_Param) GetHelp() string {
+	if m != nil {
+		return m.Help
+	}
+	return ""
+}
+
+func (m *ListAlertingRulesResponse_Param) GetUnit() ParamUnit {
+	if m != nil {
+		return m.Unit
+	}
+	return ParamUnit_PARAM_UNIT_INVALID
+}
+
+func (m *ListAlertingRulesResponse_Param) GetType() ParamType {
+	if m != nil {
+		return m.Type
+	}
+	return ParamType_PARAM_TYPE_INVALID
+}
+
+func (m *ListAlertingRulesResponse_Param) GetMinValue() float32 {
+	if m != nil {
+		return m.MinValue
+	}
+	return 0
+}
+
+func (m *ListAlertingRulesResponse_Param) GetMaxValue() float32 {
+	if m != nil {
+		return m.MaxValue
+	}
+	return 0
+}
+
+func (m *ListAlertingRulesResponse_Param) GetValue() float32 {
+	if m != nil {
+		return m.Value
+	}
+	return 0
+}
+
+// Rule represents Integrated Alerting rule.
+type ListAlertingRulesResponse_Rule struct {
+	// Rule name.
+	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	// Rule description.
+	Help string `protobuf:"bytes,2,opt,name=help,proto3" json:"help,omitempty"`
+	// Rule parameters.
+	Params []*ListAlertingRulesResponse_Param `protobuf:"bytes,3,rep,name=params,proto3" json:"params,omitempty"`
+	// Rule duration.
+	For                  *duration.Duration `protobuf:"bytes,4,opt,name=for,proto3" json:"for,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}           `json:"-"`
+	XXX_unrecognized     []byte             `json:"-"`
+	XXX_sizecache        int32              `json:"-"`
+}
+
+func (m *ListAlertingRulesResponse_Rule) Reset()         { *m = ListAlertingRulesResponse_Rule{} }
+func (m *ListAlertingRulesResponse_Rule) String() string { return proto.CompactTextString(m) }
+func (*ListAlertingRulesResponse_Rule) ProtoMessage()    {}
+func (*ListAlertingRulesResponse_Rule) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f77c2da78f7912f5, []int{1, 1}
+}
+
+func (m *ListAlertingRulesResponse_Rule) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ListAlertingRulesResponse_Rule.Unmarshal(m, b)
+}
+func (m *ListAlertingRulesResponse_Rule) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ListAlertingRulesResponse_Rule.Marshal(b, m, deterministic)
+}
+func (m *ListAlertingRulesResponse_Rule) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ListAlertingRulesResponse_Rule.Merge(m, src)
+}
+func (m *ListAlertingRulesResponse_Rule) XXX_Size() int {
+	return xxx_messageInfo_ListAlertingRulesResponse_Rule.Size(m)
+}
+func (m *ListAlertingRulesResponse_Rule) XXX_DiscardUnknown() {
+	xxx_messageInfo_ListAlertingRulesResponse_Rule.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ListAlertingRulesResponse_Rule proto.InternalMessageInfo
+
+func (m *ListAlertingRulesResponse_Rule) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+func (m *ListAlertingRulesResponse_Rule) GetHelp() string {
+	if m != nil {
+		return m.Help
+	}
+	return ""
+}
+
+func (m *ListAlertingRulesResponse_Rule) GetParams() []*ListAlertingRulesResponse_Param {
+	if m != nil {
+		return m.Params
+	}
+	return nil
+}
+
+func (m *ListAlertingRulesResponse_Rule) GetFor() *duration.Duration {
+	if m != nil {
+		return m.For
+	}
+	return nil
+}
+
 func init() {
+	proto.RegisterEnum("ia.v1beta1.ParamUnit", ParamUnit_name, ParamUnit_value)
+	proto.RegisterEnum("ia.v1beta1.ParamType", ParamType_name, ParamType_value)
 	proto.RegisterType((*ListAlertingRulesRequest)(nil), "ia.v1beta1.ListAlertingRulesRequest")
 	proto.RegisterType((*ListAlertingRulesResponse)(nil), "ia.v1beta1.ListAlertingRulesResponse")
+	proto.RegisterType((*ListAlertingRulesResponse_Param)(nil), "ia.v1beta1.ListAlertingRulesResponse.Param")
+	proto.RegisterType((*ListAlertingRulesResponse_Rule)(nil), "ia.v1beta1.ListAlertingRulesResponse.Rule")
 }
 
 func init() {
@@ -97,20 +326,37 @@ func init() {
 }
 
 var fileDescriptor_f77c2da78f7912f5 = []byte{
-	// 198 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x92, 0xce, 0x4d, 0xcc, 0x4b,
-	0x4c, 0x4f, 0xcd, 0x4d, 0xcd, 0x2b, 0x29, 0x48, 0xd2, 0xcf, 0x4c, 0xd4, 0x2f, 0x2a, 0xcd, 0x49,
-	0x2d, 0xd6, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0xe2, 0xca, 0x4c, 0xd4, 0x2b, 0x33, 0x4c, 0x4a,
-	0x2d, 0x49, 0x34, 0x94, 0x92, 0x49, 0xcf, 0xcf, 0x4f, 0xcf, 0x49, 0xd5, 0x4f, 0x2c, 0xc8, 0xd4,
-	0x4f, 0xcc, 0xcb, 0xcb, 0x2f, 0x49, 0x2c, 0xc9, 0xcc, 0xcf, 0x83, 0xaa, 0x54, 0x92, 0xe2, 0x92,
-	0xf0, 0xc9, 0x2c, 0x2e, 0x71, 0xcc, 0x49, 0x2d, 0x2a, 0xc9, 0xcc, 0x4b, 0x0f, 0x02, 0x19, 0x12,
-	0x94, 0x5a, 0x58, 0x9a, 0x5a, 0x5c, 0xa2, 0x24, 0xcd, 0x25, 0x89, 0x45, 0xae, 0xb8, 0x20, 0x3f,
-	0xaf, 0x38, 0xd5, 0x68, 0x32, 0x23, 0x17, 0x2b, 0x58, 0x44, 0xa8, 0x93, 0x91, 0x4b, 0x10, 0x43,
-	0x9d, 0x90, 0x8a, 0x1e, 0xc2, 0x0d, 0x7a, 0xb8, 0xac, 0x90, 0x52, 0x25, 0xa0, 0x0a, 0x62, 0x99,
-	0x92, 0x7a, 0xd3, 0xe5, 0x27, 0x93, 0x99, 0x14, 0x95, 0x64, 0xf4, 0xcb, 0x0c, 0xf5, 0x11, 0x1e,
-	0x07, 0x79, 0x1b, 0xac, 0x50, 0x1f, 0xa4, 0xd5, 0x8a, 0x51, 0xcb, 0x89, 0x3b, 0x8a, 0x33, 0x33,
-	0x11, 0x6a, 0x5e, 0x12, 0x1b, 0xd8, 0x8b, 0xc6, 0x80, 0x00, 0x00, 0x00, 0xff, 0xff, 0x3b, 0x0b,
-	0xd4, 0x25, 0x2b, 0x01, 0x00, 0x00,
+	// 475 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x53, 0xd1, 0x8a, 0x13, 0x31,
+	0x14, 0x35, 0x9d, 0x4e, 0x75, 0x6e, 0x61, 0xa9, 0x41, 0x65, 0x76, 0x76, 0x91, 0x5a, 0x14, 0x6b,
+	0x17, 0x32, 0xb4, 0xfb, 0xe6, 0x93, 0xe3, 0x6e, 0x95, 0x42, 0xad, 0x25, 0xcc, 0x2e, 0xe8, 0x4b,
+	0x49, 0x31, 0x5b, 0x03, 0x33, 0x99, 0x71, 0x26, 0x53, 0x76, 0x5f, 0x7d, 0xf3, 0x79, 0x7f, 0xc0,
+	0x7f, 0x12, 0xc1, 0x0f, 0xf0, 0x43, 0x24, 0x99, 0x68, 0x17, 0xb4, 0xd8, 0xb7, 0xdc, 0x9c, 0x73,
+	0x92, 0x7b, 0xce, 0x4d, 0xe0, 0x20, 0x65, 0x92, 0xad, 0x78, 0xca, 0xa5, 0xca, 0x97, 0xa1, 0x60,
+	0x61, 0x51, 0x25, 0xbc, 0x24, 0x79, 0x91, 0xa9, 0x0c, 0x83, 0x60, 0x64, 0x3d, 0x5c, 0x72, 0xc5,
+	0x86, 0xc1, 0xe1, 0x2a, 0xcb, 0x56, 0x09, 0x0f, 0x59, 0x2e, 0x42, 0x26, 0x65, 0xa6, 0x98, 0x12,
+	0x99, 0xb4, 0xcc, 0xe0, 0xa1, 0x45, 0x4d, 0xb5, 0xac, 0x2e, 0xc2, 0x0f, 0x55, 0x61, 0x08, 0x35,
+	0xde, 0x0b, 0xc0, 0x9f, 0x8a, 0x52, 0x45, 0x09, 0x2f, 0x94, 0x90, 0x2b, 0xaa, 0x2f, 0xa1, 0xfc,
+	0x53, 0xc5, 0x4b, 0xd5, 0xfb, 0xe1, 0xc0, 0xfe, 0x3f, 0xc0, 0x32, 0xcf, 0x64, 0xc9, 0xf1, 0x0b,
+	0x70, 0x4d, 0x4b, 0x3e, 0xea, 0x3a, 0xfd, 0xf6, 0x68, 0x40, 0x36, 0x3d, 0x91, 0xad, 0x2a, 0xa2,
+	0x2b, 0x5a, 0x0b, 0x83, 0xef, 0x08, 0xdc, 0x39, 0x2b, 0x58, 0x8a, 0x31, 0x34, 0x25, 0x4b, 0xb9,
+	0x8f, 0xba, 0xa8, 0xef, 0x51, 0xb3, 0xd6, 0x7b, 0x1f, 0x79, 0x92, 0xfb, 0x8d, 0x7a, 0x4f, 0xaf,
+	0xf1, 0x33, 0x68, 0x56, 0x52, 0x28, 0xdf, 0xe9, 0xa2, 0xfe, 0xde, 0xe8, 0xfe, 0xcd, 0x2b, 0xcd,
+	0x41, 0x67, 0x52, 0x28, 0x6a, 0x28, 0x9a, 0xaa, 0xae, 0x72, 0xee, 0x37, 0xb7, 0x50, 0xe3, 0xab,
+	0x9c, 0x53, 0x43, 0xc1, 0x07, 0xe0, 0xa5, 0x42, 0x2e, 0xd6, 0x2c, 0xa9, 0xb8, 0xef, 0x76, 0x51,
+	0xbf, 0x41, 0xef, 0xa4, 0x42, 0x9e, 0xeb, 0xda, 0x80, 0xec, 0xd2, 0x82, 0x2d, 0x0b, 0xb2, 0xcb,
+	0x1a, 0xbc, 0x07, 0x6e, 0x0d, 0xdc, 0x36, 0x40, 0x5d, 0x04, 0x5f, 0x11, 0x34, 0xb5, 0xcf, 0x9d,
+	0x6d, 0x9d, 0x40, 0x2b, 0xd7, 0x3d, 0x95, 0xbe, 0x63, 0xb2, 0x3c, 0xda, 0x2d, 0x4b, 0xe3, 0x83,
+	0x5a, 0x29, 0x3e, 0x02, 0xe7, 0x22, 0x2b, 0x8c, 0xdf, 0xf6, 0x68, 0x9f, 0xd4, 0x73, 0x27, 0xbf,
+	0xe7, 0x4e, 0x4e, 0xed, 0xdc, 0xa9, 0x66, 0x0d, 0x8e, 0xc1, 0xfb, 0x13, 0x18, 0x7e, 0x00, 0x78,
+	0x1e, 0xd1, 0xe8, 0xcd, 0xe2, 0x6c, 0x36, 0x89, 0x17, 0x93, 0xd9, 0x79, 0x34, 0x9d, 0x9c, 0x76,
+	0x6e, 0xe1, 0x3d, 0x80, 0xf9, 0x98, 0x9e, 0x8c, 0x67, 0x71, 0xf4, 0x7a, 0xdc, 0x41, 0x03, 0x62,
+	0x45, 0x3a, 0xba, 0x8d, 0x28, 0x7e, 0x37, 0x1f, 0xdf, 0x10, 0x79, 0xe0, 0xbe, 0x9a, 0xbe, 0x8d,
+	0xe2, 0x0e, 0x1a, 0x5d, 0x23, 0x70, 0x4d, 0xc7, 0xf8, 0x0b, 0x82, 0xbb, 0x7f, 0xf9, 0xc0, 0x8f,
+	0xff, 0x63, 0xd3, 0xbc, 0xc2, 0xe0, 0xc9, 0x4e, 0x61, 0xf4, 0x9e, 0x7e, 0xfe, 0xf6, 0xf3, 0xba,
+	0xf1, 0xa8, 0x77, 0x18, 0xae, 0x87, 0xe1, 0xe6, 0xef, 0xe8, 0x9f, 0x63, 0x88, 0xa1, 0x96, 0x3e,
+	0x47, 0x83, 0x97, 0xed, 0xf7, 0x9e, 0x60, 0xf6, 0xbc, 0x65, 0xcb, 0xe4, 0x73, 0xfc, 0x2b, 0x00,
+	0x00, 0xff, 0xff, 0x8a, 0x08, 0x06, 0x9e, 0x6e, 0x03, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.

@@ -6,6 +6,8 @@ package iav1beta1
 import (
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
+	_ "github.com/golang/protobuf/ptypes/duration"
+	github_com_mwitkow_go_proto_validators "github.com/mwitkow/go-proto-validators"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	math "math"
 )
@@ -19,5 +21,30 @@ func (this *ListAlertingRulesRequest) Validate() error {
 	return nil
 }
 func (this *ListAlertingRulesResponse) Validate() error {
+	for _, item := range this.Rules {
+		if item != nil {
+			if err := github_com_mwitkow_go_proto_validators.CallValidatorIfExists(item); err != nil {
+				return github_com_mwitkow_go_proto_validators.FieldError("Rules", err)
+			}
+		}
+	}
+	return nil
+}
+func (this *ListAlertingRulesResponse_Param) Validate() error {
+	return nil
+}
+func (this *ListAlertingRulesResponse_Rule) Validate() error {
+	for _, item := range this.Params {
+		if item != nil {
+			if err := github_com_mwitkow_go_proto_validators.CallValidatorIfExists(item); err != nil {
+				return github_com_mwitkow_go_proto_validators.FieldError("Params", err)
+			}
+		}
+	}
+	if this.For != nil {
+		if err := github_com_mwitkow_go_proto_validators.CallValidatorIfExists(this.For); err != nil {
+			return github_com_mwitkow_go_proto_validators.FieldError("For", err)
+		}
+	}
 	return nil
 }

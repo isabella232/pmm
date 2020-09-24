@@ -6,6 +6,7 @@ package rules
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 	"strconv"
@@ -14,6 +15,7 @@ import (
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // ListAlertingRulesReader is a Reader for the ListAlertingRules structure.
@@ -52,21 +54,23 @@ func NewListAlertingRulesOK() *ListAlertingRulesOK {
 A successful response.
 */
 type ListAlertingRulesOK struct {
-	Payload interface{}
+	Payload *ListAlertingRulesOKBody
 }
 
 func (o *ListAlertingRulesOK) Error() string {
 	return fmt.Sprintf("[POST /v1/management/ia/Rules/List][%d] listAlertingRulesOk  %+v", 200, o.Payload)
 }
 
-func (o *ListAlertingRulesOK) GetPayload() interface{} {
+func (o *ListAlertingRulesOK) GetPayload() *ListAlertingRulesOKBody {
 	return o.Payload
 }
 
 func (o *ListAlertingRulesOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(ListAlertingRulesOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
@@ -219,6 +223,298 @@ func (o *ListAlertingRulesDefaultBody) MarshalBinary() ([]byte, error) {
 // UnmarshalBinary interface implementation
 func (o *ListAlertingRulesDefaultBody) UnmarshalBinary(b []byte) error {
 	var res ListAlertingRulesDefaultBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*ListAlertingRulesOKBody list alerting rules OK body
+swagger:model ListAlertingRulesOKBody
+*/
+type ListAlertingRulesOKBody struct {
+
+	// Integrated Alerting rules.
+	Rules []*RulesItems0 `json:"rules"`
+}
+
+// Validate validates this list alerting rules OK body
+func (o *ListAlertingRulesOKBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateRules(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *ListAlertingRulesOKBody) validateRules(formats strfmt.Registry) error {
+
+	if swag.IsZero(o.Rules) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Rules); i++ {
+		if swag.IsZero(o.Rules[i]) { // not required
+			continue
+		}
+
+		if o.Rules[i] != nil {
+			if err := o.Rules[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("listAlertingRulesOk" + "." + "rules" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *ListAlertingRulesOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *ListAlertingRulesOKBody) UnmarshalBinary(b []byte) error {
+	var res ListAlertingRulesOKBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*RulesItems0 Rule represents Integrated Alerting rule.
+swagger:model RulesItems0
+*/
+type RulesItems0 struct {
+
+	// Rule name.
+	Name string `json:"name,omitempty"`
+
+	// Rule description.
+	Help string `json:"help,omitempty"`
+
+	// Rule parameters.
+	Params []*RulesItems0ParamsItems0 `json:"params"`
+
+	// Rule duration.
+	For string `json:"for,omitempty"`
+}
+
+// Validate validates this rules items0
+func (o *RulesItems0) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateParams(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *RulesItems0) validateParams(formats strfmt.Registry) error {
+
+	if swag.IsZero(o.Params) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Params); i++ {
+		if swag.IsZero(o.Params[i]) { // not required
+			continue
+		}
+
+		if o.Params[i] != nil {
+			if err := o.Params[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("params" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *RulesItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *RulesItems0) UnmarshalBinary(b []byte) error {
+	var res RulesItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*RulesItems0ParamsItems0 Param repsesents a single Integrated Alerting rule parameter.
+swagger:model RulesItems0ParamsItems0
+*/
+type RulesItems0ParamsItems0 struct {
+
+	// Parameter name.
+	Name string `json:"name,omitempty"`
+
+	// Parameter description.
+	Help string `json:"help,omitempty"`
+
+	// ParamUnit Integrated Alerting rule parameter unit.
+	// Enum: [PARAM_UNIT_INVALID PERCENTAGE]
+	Unit *string `json:"unit,omitempty"`
+
+	// ParamType Integrated Alerting rule parameter type.
+	// Enum: [PARAM_TYPE_INVALID FLOAT]
+	Type *string `json:"type,omitempty"`
+
+	// Parameter minimal value (float).
+	MinValue float32 `json:"min_value,omitempty"`
+
+	// Parameter maximum value (float).
+	MaxValue float32 `json:"max_value,omitempty"`
+
+	// Parameter current value (float).
+	Value float32 `json:"value,omitempty"`
+}
+
+// Validate validates this rules items0 params items0
+func (o *RulesItems0ParamsItems0) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateUnit(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateType(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var rulesItems0ParamsItems0TypeUnitPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["PARAM_UNIT_INVALID","PERCENTAGE"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		rulesItems0ParamsItems0TypeUnitPropEnum = append(rulesItems0ParamsItems0TypeUnitPropEnum, v)
+	}
+}
+
+const (
+
+	// RulesItems0ParamsItems0UnitPARAMUNITINVALID captures enum value "PARAM_UNIT_INVALID"
+	RulesItems0ParamsItems0UnitPARAMUNITINVALID string = "PARAM_UNIT_INVALID"
+
+	// RulesItems0ParamsItems0UnitPERCENTAGE captures enum value "PERCENTAGE"
+	RulesItems0ParamsItems0UnitPERCENTAGE string = "PERCENTAGE"
+)
+
+// prop value enum
+func (o *RulesItems0ParamsItems0) validateUnitEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, rulesItems0ParamsItems0TypeUnitPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *RulesItems0ParamsItems0) validateUnit(formats strfmt.Registry) error {
+
+	if swag.IsZero(o.Unit) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateUnitEnum("unit", "body", *o.Unit); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var rulesItems0ParamsItems0TypeTypePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["PARAM_TYPE_INVALID","FLOAT"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		rulesItems0ParamsItems0TypeTypePropEnum = append(rulesItems0ParamsItems0TypeTypePropEnum, v)
+	}
+}
+
+const (
+
+	// RulesItems0ParamsItems0TypePARAMTYPEINVALID captures enum value "PARAM_TYPE_INVALID"
+	RulesItems0ParamsItems0TypePARAMTYPEINVALID string = "PARAM_TYPE_INVALID"
+
+	// RulesItems0ParamsItems0TypeFLOAT captures enum value "FLOAT"
+	RulesItems0ParamsItems0TypeFLOAT string = "FLOAT"
+)
+
+// prop value enum
+func (o *RulesItems0ParamsItems0) validateTypeEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, rulesItems0ParamsItems0TypeTypePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *RulesItems0ParamsItems0) validateType(formats strfmt.Registry) error {
+
+	if swag.IsZero(o.Type) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateTypeEnum("type", "body", *o.Type); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *RulesItems0ParamsItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *RulesItems0ParamsItems0) UnmarshalBinary(b []byte) error {
+	var res RulesItems0ParamsItems0
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

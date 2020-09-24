@@ -5,12 +5,56 @@ package ia.v1beta1;
 option go_package = "iav1beta1";
 
 import "google/api/annotations.proto";
+import "google/protobuf/duration.proto";
 
 // TODO move it to parent directory / package once API is v1-stable
 
 message ListAlertingRulesRequest {}
 
-message ListAlertingRulesResponse {}
+// ParamUnit Integrated Alerting rule parameter unit.
+enum ParamUnit {
+  PARAM_UNIT_INVALID = 0;
+  PERCENTAGE = 1;
+}
+
+// ParamType Integrated Alerting rule parameter type.
+enum ParamType {
+  PARAM_TYPE_INVALID = 0;
+  FLOAT = 1;
+}
+
+message ListAlertingRulesResponse {
+  // Param repsesents a single Integrated Alerting rule parameter.
+  message Param {
+    // Parameter name.
+    string name = 1;
+    // Parameter description.
+    string help = 2;
+    // Parameter unit.
+    ParamUnit unit = 3;
+    // Parameter type.
+    ParamType type = 4;
+    // Parameter minimal value (float).
+    float min_value = 5;
+    // Parameter maximum value (float).
+    float max_value = 6;
+    // Parameter current value (float).
+    float value = 7;
+  }
+  // Rule represents Integrated Alerting rule.
+  message Rule {
+    // Rule name.
+    string name = 1;
+    // Rule description.
+    string help = 2;
+    // Rule parameters.
+    repeated Param params = 3;
+    // Rule duration.
+    google.protobuf.Duration for = 4;
+  }
+  // Integrated Alerting rules.
+  repeated Rule rules = 1;
+}
 
 // Rules service provides public methods for managing Integrated Alerting rules.
 service Rules {
