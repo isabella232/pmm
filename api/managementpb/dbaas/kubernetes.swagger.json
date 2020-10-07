@@ -1,0 +1,212 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "managementpb/dbaas/kubernetes.proto",
+    "version": "version not set"
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/management/DBaaS/Kubernetes/List": {
+      "post": {
+        "summary": "ListKubernetesClusters returns a list of all registered Kubernetes clusters.",
+        "operationId": "ListKubernetesClusters",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1beta1ListKubernetesClustersResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1beta1ListKubernetesClustersRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Kubernetes"
+        ]
+      }
+    },
+    "/v1/management/DBaaS/Kubernetes/Register": {
+      "post": {
+        "summary": "RegisterKubernetesCluster registers an existing Kubernetes cluster in PMM.",
+        "operationId": "RegisterKubernetesCluster",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1beta1RegisterKubernetesClusterResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1beta1RegisterKubernetesClusterRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Kubernetes"
+        ]
+      }
+    },
+    "/v1/management/DBaaS/Kubernetes/Unregister": {
+      "post": {
+        "summary": "UnregisterKubernetesCluster removes a registered Kubernetes cluster from PMM.",
+        "operationId": "UnregisterKubernetesCluster",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1beta1UnregisterKubernetesClusterResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1beta1UnregisterKubernetesClusterRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Kubernetes"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "ListKubernetesClustersResponseCluster": {
+      "type": "object",
+      "properties": {
+        "kubernetes_cluster_name": {
+          "type": "string",
+          "description": "Kubernetes cluster name."
+        }
+      },
+      "description": "Cluster contains public info about kubernetes cluster."
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "type_url": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "runtimeError": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1beta1KubeAuth": {
+      "type": "object",
+      "properties": {
+        "kubeconfig": {
+          "type": "string",
+          "description": "Kubeconfig file content."
+        }
+      },
+      "description": "KubeAuth represents Kubernetes / kubectl authentication and authorization information."
+    },
+    "v1beta1ListKubernetesClustersRequest": {
+      "type": "object"
+    },
+    "v1beta1ListKubernetesClustersResponse": {
+      "type": "object",
+      "properties": {
+        "kubernetes_clusters": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ListKubernetesClustersResponseCluster"
+          },
+          "description": "Kubernetes clusters."
+        }
+      }
+    },
+    "v1beta1RegisterKubernetesClusterRequest": {
+      "type": "object",
+      "properties": {
+        "kubernetes_cluster_name": {
+          "type": "string",
+          "description": "Kubernetes cluster name."
+        },
+        "kube_auth": {
+          "$ref": "#/definitions/v1beta1KubeAuth",
+          "description": "Kubernetes auth."
+        }
+      }
+    },
+    "v1beta1RegisterKubernetesClusterResponse": {
+      "type": "object"
+    },
+    "v1beta1UnregisterKubernetesClusterRequest": {
+      "type": "object",
+      "properties": {
+        "kubernetes_cluster_name": {
+          "type": "string",
+          "description": "Kubernetes cluster name."
+        }
+      }
+    },
+    "v1beta1UnregisterKubernetesClusterResponse": {
+      "type": "object"
+    }
+  }
+}

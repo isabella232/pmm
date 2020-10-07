@@ -1,0 +1,235 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "managementpb/external.proto",
+    "version": "version not set"
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/management/External/Add": {
+      "post": {
+        "summary": "AddExternal adds external service and adds external exporter.\nIt automatically adds a service to inventory, which is running on provided \"node_id\",\nthen adds an \"external exporter\" agent to inventory, which is running on provided \"runs_on_node_id\".",
+        "operationId": "AddExternal",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/managementAddExternalResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/managementAddExternalRequest"
+            }
+          }
+        ],
+        "tags": [
+          "External"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "inventoryExternalExporter": {
+      "type": "object",
+      "properties": {
+        "agent_id": {
+          "type": "string",
+          "description": "Unique randomly generated instance identifier."
+        },
+        "runs_on_node_id": {
+          "type": "string",
+          "description": "Node identifier where this instance runs."
+        },
+        "disabled": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": "If disabled, metrics from this exporter will not be collected."
+        },
+        "service_id": {
+          "type": "string",
+          "description": "Service identifier."
+        },
+        "username": {
+          "type": "string",
+          "description": "HTTP basic auth username for collecting metrics."
+        },
+        "scheme": {
+          "type": "string",
+          "description": "Scheme to generate URI to exporter metrics endpoints."
+        },
+        "metrics_path": {
+          "type": "string",
+          "description": "Path under which metrics are exposed, used to generate URI."
+        },
+        "custom_labels": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Custom user-assigned labels."
+        },
+        "listen_port": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Listen port for scraping metrics."
+        }
+      },
+      "description": "ExternalExporter runs on any Node type, including Remote Node."
+    },
+    "inventoryExternalService": {
+      "type": "object",
+      "properties": {
+        "service_id": {
+          "type": "string",
+          "description": "Unique randomly generated instance identifier."
+        },
+        "service_name": {
+          "type": "string",
+          "description": "Unique across all Services user-defined name."
+        },
+        "node_id": {
+          "type": "string",
+          "description": "Node identifier where this service instance runs."
+        },
+        "environment": {
+          "type": "string",
+          "description": "Environment name."
+        },
+        "cluster": {
+          "type": "string",
+          "description": "Cluster name."
+        },
+        "replication_set": {
+          "type": "string",
+          "description": "Replication set name."
+        },
+        "custom_labels": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Custom user-assigned labels."
+        }
+      },
+      "description": "ExternalService represents a generic External service instance."
+    },
+    "managementAddExternalRequest": {
+      "type": "object",
+      "properties": {
+        "runs_on_node_id": {
+          "type": "string",
+          "description": "Node identifier on which a external exporter is been running. Required."
+        },
+        "service_name": {
+          "type": "string",
+          "description": "Unique across all Services user-defined name. Required."
+        },
+        "username": {
+          "type": "string",
+          "description": "HTTP basic auth username for collecting metrics."
+        },
+        "password": {
+          "type": "string",
+          "description": "HTTP basic auth password for collecting metrics."
+        },
+        "scheme": {
+          "type": "string",
+          "description": "Scheme to generate URI to exporter metrics endpoints."
+        },
+        "metrics_path": {
+          "type": "string",
+          "description": "Path under which metrics are exposed, used to generate URI."
+        },
+        "listen_port": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Listen port for scraping metrics."
+        },
+        "node_id": {
+          "type": "string",
+          "description": "Node identifier on which a external service is been running. Required."
+        },
+        "environment": {
+          "type": "string",
+          "description": "Environment name."
+        },
+        "cluster": {
+          "type": "string",
+          "description": "Cluster name."
+        },
+        "replication_set": {
+          "type": "string",
+          "description": "Replication set name."
+        },
+        "custom_labels": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Custom user-assigned labels for Service."
+        }
+      }
+    },
+    "managementAddExternalResponse": {
+      "type": "object",
+      "properties": {
+        "service": {
+          "$ref": "#/definitions/inventoryExternalService"
+        },
+        "external_exporter": {
+          "$ref": "#/definitions/inventoryExternalExporter"
+        }
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "type_url": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "runtimeError": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,737 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "serverpb/server.proto",
+    "version": "version not set"
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/AWSInstanceCheck": {
+      "post": {
+        "summary": "AWSInstanceCheck checks AWS EC2 instance ID.",
+        "operationId": "AWSInstanceCheck",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/serverAWSInstanceCheckResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/serverAWSInstanceCheckRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Server"
+        ]
+      }
+    },
+    "/v1/Platform/SignIn": {
+      "post": {
+        "summary": "PlatformSignIn links that PMM instance to Percona Platform user.",
+        "operationId": "PlatformSignIn",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/serverPlatformSignInResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/serverPlatformSignInRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Server"
+        ]
+      }
+    },
+    "/v1/Platform/SignOut": {
+      "post": {
+        "summary": "PlatformSignOut logouts this PMM instance from Percona Platform account.",
+        "operationId": "PlatformSignOut",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/serverPlatformSignOutResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/serverPlatformSignOutRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Server"
+        ]
+      }
+    },
+    "/v1/Platform/SignUp": {
+      "post": {
+        "summary": "PlatformSignUp creates a new Percona Platform user.",
+        "operationId": "PlatformSignUp",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/serverPlatformSignUpResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/serverPlatformSignUpRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Server"
+        ]
+      }
+    },
+    "/v1/Settings/Change": {
+      "post": {
+        "summary": "ChangeSettings changes PMM Server settings.",
+        "operationId": "ChangeSettings",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/serverChangeSettingsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/serverChangeSettingsRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Server"
+        ]
+      }
+    },
+    "/v1/Settings/Get": {
+      "post": {
+        "summary": "GetSettings returns current PMM Server settings.",
+        "operationId": "GetSettings",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/serverGetSettingsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/serverGetSettingsRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Server"
+        ]
+      }
+    },
+    "/v1/Updates/Check": {
+      "post": {
+        "summary": "CheckUpdates checks PMM Server updates availability.",
+        "operationId": "CheckUpdates",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/serverCheckUpdatesResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/serverCheckUpdatesRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Server"
+        ]
+      }
+    },
+    "/v1/Updates/Start": {
+      "post": {
+        "summary": "StartUpdate starts PMM Server update.",
+        "operationId": "StartUpdate",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/serverStartUpdateResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/serverStartUpdateRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Server"
+        ]
+      }
+    },
+    "/v1/Updates/Status": {
+      "post": {
+        "summary": "UpdateStatus returns PMM Server update status.",
+        "operationId": "UpdateStatus",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/serverUpdateStatusResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/serverUpdateStatusRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Server"
+        ]
+      }
+    },
+    "/v1/readyz": {
+      "get": {
+        "summary": "Readiness returns an error when some PMM Server component is not ready yet or is being restarted.\nIt can be used as for Docker health check or Kubernetes readiness probe.",
+        "operationId": "Readiness",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/serverReadinessResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "tags": [
+          "Server"
+        ]
+      }
+    },
+    "/v1/version": {
+      "get": {
+        "summary": "Version returns PMM Server versions.",
+        "operationId": "Version",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/serverVersionResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "dummy",
+            "description": "Dummy parameter for internal testing. Do not use.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Server"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "type_url": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "runtimeError": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "serverAWSInstanceCheckRequest": {
+      "type": "object",
+      "properties": {
+        "instance_id": {
+          "type": "string",
+          "description": "AWS EC2 instance ID (i-1234567890abcdef0)."
+        }
+      }
+    },
+    "serverAWSInstanceCheckResponse": {
+      "type": "object"
+    },
+    "serverChangeSettingsRequest": {
+      "type": "object",
+      "properties": {
+        "enable_telemetry": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "disable_telemetry": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "metrics_resolutions": {
+          "$ref": "#/definitions/serverMetricsResolutions"
+        },
+        "data_retention": {
+          "type": "string",
+          "description": "A number of full days for Prometheus and QAN data retention. Should have a suffix in JSON: 2592000s, 43200m, 720h."
+        },
+        "ssh_key": {
+          "type": "string"
+        },
+        "aws_partitions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "alert_manager_url": {
+          "type": "string",
+          "description": "Prometheus AlertManager URL (e.g., https://username:password@1.2.3.4/path)."
+        },
+        "remove_alert_manager_url": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "alert_manager_rules": {
+          "type": "string"
+        },
+        "remove_alert_manager_rules": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "enable_stt": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "Enable Security Threat Tool"
+        },
+        "disable_stt": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "Disable Security Threat Tool"
+        }
+      }
+    },
+    "serverChangeSettingsResponse": {
+      "type": "object",
+      "properties": {
+        "settings": {
+          "$ref": "#/definitions/serverSettings"
+        }
+      }
+    },
+    "serverCheckUpdatesRequest": {
+      "type": "object",
+      "properties": {
+        "force": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": "If false, cached information may be returned."
+        }
+      }
+    },
+    "serverCheckUpdatesResponse": {
+      "type": "object",
+      "properties": {
+        "installed": {
+          "$ref": "#/definitions/serverVersionInfo",
+          "description": "Currently installed PMM Server version."
+        },
+        "latest": {
+          "$ref": "#/definitions/serverVersionInfo",
+          "description": "Latest available PMM Server version."
+        },
+        "update_available": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": "True if there is a PMM Server update available."
+        },
+        "latest_news_url": {
+          "type": "string",
+          "description": "Latest available PMM Server release announcement URL."
+        },
+        "last_check": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Last check time."
+        }
+      }
+    },
+    "serverDistributionMethod": {
+      "type": "string",
+      "enum": [
+        "DISTRIBUTION_METHOD_INVALID",
+        "DOCKER",
+        "OVF",
+        "AMI"
+      ],
+      "default": "DISTRIBUTION_METHOD_INVALID",
+      "description": "DistributionMethod defines PMM Server distribution method: Docker image, OVF/OVA, or AMI."
+    },
+    "serverGetSettingsRequest": {
+      "type": "object"
+    },
+    "serverGetSettingsResponse": {
+      "type": "object",
+      "properties": {
+        "settings": {
+          "$ref": "#/definitions/serverSettings"
+        }
+      }
+    },
+    "serverMetricsResolutions": {
+      "type": "object",
+      "properties": {
+        "hr": {
+          "type": "string",
+          "description": "High resolution. Should have a suffix in JSON: 1s, 1m, 1h."
+        },
+        "mr": {
+          "type": "string",
+          "description": "Medium resolution. Should have a suffix in JSON: 1s, 1m, 1h."
+        },
+        "lr": {
+          "type": "string",
+          "description": "Low resolution. Should have a suffix in JSON: 1s, 1m, 1h."
+        }
+      },
+      "description": "MetricsResolutions represents Prometheus exporters metrics resolutions."
+    },
+    "serverPlatformSignInRequest": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "description": "Existing Percona Platform user's email."
+        },
+        "password": {
+          "type": "string",
+          "description": "Existing Percona Platform user's password."
+        }
+      }
+    },
+    "serverPlatformSignInResponse": {
+      "type": "object"
+    },
+    "serverPlatformSignOutRequest": {
+      "type": "object"
+    },
+    "serverPlatformSignOutResponse": {
+      "type": "object"
+    },
+    "serverPlatformSignUpRequest": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "description": "New Percona Platform user's email."
+        },
+        "password": {
+          "type": "string",
+          "description": "New Percona Platform user's password."
+        }
+      }
+    },
+    "serverPlatformSignUpResponse": {
+      "type": "object"
+    },
+    "serverReadinessResponse": {
+      "type": "object"
+    },
+    "serverSettings": {
+      "type": "object",
+      "properties": {
+        "updates_disabled": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "telemetry_enabled": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "metrics_resolutions": {
+          "$ref": "#/definitions/serverMetricsResolutions"
+        },
+        "data_retention": {
+          "type": "string"
+        },
+        "ssh_key": {
+          "type": "string"
+        },
+        "aws_partitions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "alert_manager_url": {
+          "type": "string",
+          "description": "Prometheus AlertManager URL (e.g., https://username:password@1.2.3.4/path)."
+        },
+        "alert_manager_rules": {
+          "type": "string"
+        },
+        "stt_enabled": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "Security Threat Tool enabled"
+        },
+        "platform_email": {
+          "type": "string",
+          "description": "Percona Platform user's email, if this PMM instance is linked to the Platform."
+        },
+        "dbaas_enabled": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "DBaaS enabled"
+        }
+      },
+      "description": "Settings represents PMM Server settings."
+    },
+    "serverStartUpdateRequest": {
+      "type": "object"
+    },
+    "serverStartUpdateResponse": {
+      "type": "object",
+      "properties": {
+        "auth_token": {
+          "type": "string",
+          "description": "Authentication token for getting update statuses."
+        },
+        "log_offset": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Progress log offset."
+        }
+      }
+    },
+    "serverUpdateStatusRequest": {
+      "type": "object",
+      "properties": {
+        "auth_token": {
+          "type": "string",
+          "description": "Authentication token."
+        },
+        "log_offset": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Progress log offset."
+        }
+      }
+    },
+    "serverUpdateStatusResponse": {
+      "type": "object",
+      "properties": {
+        "log_lines": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Progress log lines."
+        },
+        "log_offset": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Progress log offset for the next request."
+        },
+        "done": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": "True when update is done."
+        }
+      }
+    },
+    "serverVersionInfo": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "type": "string",
+          "description": "User-visible version."
+        },
+        "full_version": {
+          "type": "string",
+          "description": "Full version for debugging."
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Build or release date."
+        }
+      },
+      "description": "VersionInfo describes component version, or PMM Server as a whole."
+    },
+    "serverVersionResponse": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "type": "string",
+          "description": "PMM Server version."
+        },
+        "server": {
+          "$ref": "#/definitions/serverVersionInfo",
+          "description": "Detailed PMM Server version information."
+        },
+        "managed": {
+          "$ref": "#/definitions/serverVersionInfo",
+          "description": "pmm-managed version information for debugging."
+        },
+        "distribution_method": {
+          "$ref": "#/definitions/serverDistributionMethod",
+          "description": "PMM Server distribution method."
+        }
+      }
+    }
+  }
+}
