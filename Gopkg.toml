@@ -40,14 +40,19 @@ required = [
   name = "github.com/pkg/errors"
   version = "=0.9.1"
 [[constraint]]
+  # FIXME Update to 1.4.3 once it is tagged. See https://github.com/golang/protobuf/issues/1219
   name = "github.com/golang/protobuf"
-  version = "=1.3.5"
+  source = "github.com/cybrcodr/protobuf"
+  revision = "3beb084e9a50bff8d7ac57f1c9aa41671f479cbd"
+[[constraint]]
+  name = "google.golang.org/protobuf"
+  version = "=1.25.0"
 [[constraint]]
   name = "google.golang.org/grpc"
-  version = "=1.30.0"
+  version = "=1.32.0"
 [[constraint]]
   name = "github.com/grpc-ecosystem/grpc-gateway"
-  version = "=1.14.3"
+  version = "=1.15.0"
 [[constraint]]
   # https://github.com/go-openapi/spec/pull/109 will not be merged, so we need to maintain our fork.
   # See https://jira.percona.com/browse/PMM-4934.
