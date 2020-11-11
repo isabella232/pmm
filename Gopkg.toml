@@ -1,6 +1,7 @@
 required = [
   # tools
   "github.com/golang/protobuf/protoc-gen-go",
+  "google.golang.org/protobuf/cmd/protoc-gen-go",
   "github.com/mwitkow/go-proto-validators/protoc-gen-govalidators",
   "github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway",
   "github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger",
@@ -40,10 +41,8 @@ required = [
   name = "github.com/pkg/errors"
   version = "=0.9.1"
 [[constraint]]
-  # FIXME Update to 1.4.3 once it is tagged. See https://github.com/golang/protobuf/issues/1219
   name = "github.com/golang/protobuf"
-  source = "github.com/cybrcodr/protobuf"
-  revision = "3beb084e9a50bff8d7ac57f1c9aa41671f479cbd"
+  version = "=1.4.3"
 [[constraint]]
   name = "google.golang.org/protobuf"
   version = "=1.25.0"

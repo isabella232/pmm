@@ -265,8 +265,8 @@
     "ptypes/wrappers",
   ]
   pruneopts = "NUT"
-  revision = "3beb084e9a50bff8d7ac57f1c9aa41671f479cbd"
-  source = "github.com/cybrcodr/protobuf"
+  revision = "4846b58453b3708320bdb524f25cc5a1d9cda4d4"
+  version = "v1.4.3"
 
 [[projects]]
   digest = "1:85d0c5fbdc502c3e55f78d7d2f62f9d1a95deb5921e5806b14a6b6948abe678d"
@@ -744,9 +744,10 @@
   version = "v1.32.0"
 
 [[projects]]
-  digest = "1:678baddf5584eab077d61e74fd42f8fe60b54911cfbce375039745f3b15c1102"
+  digest = "1:9db3da09efc421f2dfd6ac093c401c2754d01c4cf0f740ef9ce8c0f7dc370bbe"
   name = "google.golang.org/protobuf"
   packages = [
+    "cmd/protoc-gen-go",
     "cmd/protoc-gen-go/internal_gengo",
     "compiler/protogen",
     "encoding/protojson",
@@ -864,6 +865,7 @@
     "github.com/stretchr/testify",
     "github.com/stretchr/testify/assert",
     "github.com/stretchr/testify/require",
+    "go.mongodb.org/mongo-driver/bson/primitive",
     "golang.org/x/sys/unix",
     "google.golang.org/genproto/googleapis/api/annotations",
     "google.golang.org/grpc",
@@ -871,6 +873,7 @@
     "google.golang.org/grpc/grpclog",
     "google.golang.org/grpc/metadata",
     "google.golang.org/grpc/status",
+    "google.golang.org/protobuf/cmd/protoc-gen-go",
     "google.golang.org/protobuf/reflect/protoreflect",
     "google.golang.org/protobuf/runtime/protoimpl",
     "gopkg.in/reform.v1",
