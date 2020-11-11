@@ -7,6 +7,8 @@ option go_package = "api/managementpb/ia;iav1beta1";
 import "github.com/mwitkow/go-proto-validators/validator.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/duration.proto";
+import "google/protobuf/wrappers.proto";
+import "managementpb/ia/boolean_flag.proto";
 
 // TODO move it to parent directory / package once API is v1-stable
 
@@ -87,9 +89,10 @@ message ChangeAlertingRulesRequest {
       string_not_empty: true
     }
   ];
-  // Sets new rule status: enabled or disabled. Must always be sent.
-  // FIXME ?
-  bool enabled = 2;
+  // New rule status.
+  BooleanFlag enabled1 = 2;
+  // New rule status.
+  google.protobuf.BoolValue enabled2 = 20;
   // Parameters to change. Missing parameters will not be changed.
   repeated Param params = 3;
   // Rule set duration. Zero value will not change it.

@@ -11,6 +11,14 @@ protoc:
     - ../vendor
 
 lint:
+  ignores:
+    - id: ENUM_ZERO_VALUES_INVALID
+      files:
+        - managementpb/ia/boolean_flag.proto
+    - id: ENUM_ZERO_VALUES_INVALID_EXCEPT_MESSAGE
+      files:
+        - managementpb/ia/boolean_flag.proto
+
   group: empty
   rules:
     add:

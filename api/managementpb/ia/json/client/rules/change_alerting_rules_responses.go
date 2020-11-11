@@ -127,9 +127,17 @@ type ChangeAlertingRulesBody struct {
 	// Rule name.
 	Name string `json:"name,omitempty"`
 
-	// Sets new rule status: enabled or disabled. Must always be sent.
-	// FIXME ?
-	Enabled bool `json:"enabled,omitempty"`
+	// BooleanFlag represent a command to enable some boolean property (set to true),
+	// disable some boolean property (set to false), or avoid changing that property.
+	//
+	//  - DO_NOT_CHANGE: Do not change boolean property. Default value.
+	//  - ENABLE: Enable boolean property.
+	//  - DISABLE: Disable boolean property.
+	// Enum: [DO_NOT_CHANGE ENABLE DISABLE]
+	Enabled1 *string `json:"enabled1,omitempty"`
+
+	// New rule status.
+	Enabled2 bool `json:"enabled2,omitempty"`
 
 	// Parameters to change. Missing parameters will not be changed.
 	Params []*ParamsItems0 `json:"params"`
@@ -146,6 +154,10 @@ type ChangeAlertingRulesBody struct {
 func (o *ChangeAlertingRulesBody) Validate(formats strfmt.Registry) error {
 	var res []error
 
+	if err := o.validateEnabled1(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := o.validateParams(formats); err != nil {
 		res = append(res, err)
 	}
@@ -153,6 +165,52 @@ func (o *ChangeAlertingRulesBody) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+var changeAlertingRulesBodyTypeEnabled1PropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["DO_NOT_CHANGE","ENABLE","DISABLE"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		changeAlertingRulesBodyTypeEnabled1PropEnum = append(changeAlertingRulesBodyTypeEnabled1PropEnum, v)
+	}
+}
+
+const (
+
+	// ChangeAlertingRulesBodyEnabled1DONOTCHANGE captures enum value "DO_NOT_CHANGE"
+	ChangeAlertingRulesBodyEnabled1DONOTCHANGE string = "DO_NOT_CHANGE"
+
+	// ChangeAlertingRulesBodyEnabled1ENABLE captures enum value "ENABLE"
+	ChangeAlertingRulesBodyEnabled1ENABLE string = "ENABLE"
+
+	// ChangeAlertingRulesBodyEnabled1DISABLE captures enum value "DISABLE"
+	ChangeAlertingRulesBodyEnabled1DISABLE string = "DISABLE"
+)
+
+// prop value enum
+func (o *ChangeAlertingRulesBody) validateEnabled1Enum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, changeAlertingRulesBodyTypeEnabled1PropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *ChangeAlertingRulesBody) validateEnabled1(formats strfmt.Registry) error {
+
+	if swag.IsZero(o.Enabled1) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateEnabled1Enum("body"+"."+"enabled1", "body", *o.Enabled1); err != nil {
+		return err
+	}
+
 	return nil
 }
 

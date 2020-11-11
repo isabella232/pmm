@@ -7,6 +7,7 @@ import (
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
 	_ "github.com/golang/protobuf/ptypes/duration"
+	_ "github.com/golang/protobuf/ptypes/wrappers"
 	_ "github.com/mwitkow/go-proto-validators"
 	github_com_mwitkow_go_proto_validators "github.com/mwitkow/go-proto-validators"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
@@ -57,6 +58,11 @@ func (this *ListAlertingRulesResponse) Validate() error {
 func (this *ChangeAlertingRulesRequest) Validate() error {
 	if this.Name == "" {
 		return github_com_mwitkow_go_proto_validators.FieldError("Name", fmt.Errorf(`value '%v' must not be an empty string`, this.Name))
+	}
+	if this.Enabled2 != nil {
+		if err := github_com_mwitkow_go_proto_validators.CallValidatorIfExists(this.Enabled2); err != nil {
+			return github_com_mwitkow_go_proto_validators.FieldError("Enabled2", err)
+		}
 	}
 	for _, item := range this.Params {
 		if item != nil {
